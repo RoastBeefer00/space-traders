@@ -1,9 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use core::panic;
-use openapi::apis::agents_api::{get_my_agent, *};
-use openapi::apis::configuration;
+use openapi::apis::agents_api::get_my_agent;
 use openapi::apis::configuration::Configuration;
 use openapi::apis::fleet_api::get_my_ships;
 use openapi::models::*;
@@ -47,8 +45,6 @@ async fn get_user_ships() -> Vec<Ship> {
 }
 
 fn main() {
-    let mut configuration = Configuration::new();
-
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![get_user_agent, get_user_ships])
         .run(tauri::generate_context!())

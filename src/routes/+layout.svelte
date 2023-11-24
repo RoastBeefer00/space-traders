@@ -1,6 +1,23 @@
 <script>
 	import "../app.css";
 	import { fly } from "svelte/transition";
+	import { invoke } from "@tauri-apps/api/tauri";
+	import { onMount } from "svelte";
+	import credits from "$lib/stores.js";
+
+	import Money from "virtual:icons/ri/money-cny-circle-line";
+	import Badge from "virtual:icons/mdi/badge-account-horizontal";
+	import Chevron from "virtual:icons/tabler/arrow-badge-down-filled";
+
+	let agent;
+	async function get_agent() {
+		agent = await invoke("get_user_agent", {});
+		credits.set(agent.credits);
+	}
+
+	onMount(async () => {
+		get_agent().await;
+	});
 
 	export let data;
 
@@ -11,11 +28,25 @@
 
 <div>
 	<div class="p-2 border-b-2 border-cyan-400 sticky">
-		<h1
-			class="text-4xl justify-center mx-auto text-center font-bold border-8 border-cyan-400 p-2"
-		>
-			Space Traders
-		</h1>
+		<div>
+			<h1
+				class="text-4xl justify-center mx-auto text-center font-bold border-8 border-cyan-400 p-2"
+			>
+				Space Traders
+			</h1>
+			<div class="flex justify-between mt-2">
+				{#if agent != null}
+					<span>
+						{agent.symbol} -
+						{agent.startingFaction}
+					</span>
+					<span class="flex"
+						>{credits}
+						<Money class="ml-2 my-auto mr-auto text-xl" /></span
+					>
+				{/if}
+			</div>
+		</div>
 	</div>
 	<div class="flex justify-between border-b-2 border-cyan-400">
 		<a

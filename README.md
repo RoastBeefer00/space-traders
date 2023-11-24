@@ -1,39 +1,22 @@
-# create-svelte
-
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
 # space-traders
+
+## Prerequisites
+Save your [Space traders API key](https://docs.spacetraders.io/) locally in `~/.config/space-traders/key.txt` (for macOS and Linux).  No Windows support at this time.
+
+## Contribute
+- Install all [Tauri prerequisites](https://tauri.app/v1/guides/getting-started/prerequisites)
+- Install the Tauri CLI with `cargo install tauri-cli`
+- Run the following to interactively view the project while working:
+```bash
+npm install
+cargo tauri dev
+``` 
+
+## Note
+I did not write the code for the Rust implemented API to interact with Space Traders.  I used [OpenAPI Generator](https://openapi-generator.tech/) command:
+```bash
+openapi-generator-cli -g rust -i https://stoplight.io/api/v1/projects/spacetraders/spacetraders/nodes/reference/SpaceTraders.json?fromExportButton=true&snapshotType=http_service&deref=optimizedBundle
+```
+I did have to make some minor tweaks to get the code to compile.
+
+Anything in the `helpers` folder I wrote.
