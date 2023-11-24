@@ -3,10 +3,10 @@
 	import { fly } from "svelte/transition";
 	import { invoke } from "@tauri-apps/api/tauri";
 	import { onMount } from "svelte";
-	import credits from "$lib/stores.js";
+	import { credits } from "$lib/stores.js";
 
 	import Money from "virtual:icons/ri/money-cny-circle-line";
-	import Badge from "virtual:icons/mdi/badge-account-horizontal";
+	import Person from "virtual:icons/mdi/badge-account-horizontal";
 	import Chevron from "virtual:icons/tabler/arrow-badge-down-filled";
 
 	let agent;
@@ -36,12 +36,15 @@
 			</h1>
 			<div class="flex justify-between mt-2">
 				{#if agent != null}
-					<span>
-						{agent.symbol} -
+					<span class="flex">
+						<Person class="mr-2 ml-auto my-auto text-xl" />
+						{agent.symbol} - <Chevron
+							class="mr-1 ml-auto my-auto text-2xl"
+						/>
 						{agent.startingFaction}
 					</span>
 					<span class="flex"
-						>{credits}
+						>{$credits}
 						<Money class="ml-2 my-auto mr-auto text-xl" /></span
 					>
 				{/if}
