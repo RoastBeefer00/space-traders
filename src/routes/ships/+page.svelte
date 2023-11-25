@@ -10,7 +10,7 @@
 </script>
 
 <div>
-	<div class="flex h-screen">
+	<div class="flex h-full">
 		<div class="m-auto text-xl">
 			<div class="flex flex-col">
 				{#each $ships as ship}
