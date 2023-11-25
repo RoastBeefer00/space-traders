@@ -6,7 +6,7 @@
 
 <div class="flex m-3 border-2 border-cyan-400 p-4">
 	<div>
-		<Spaceship class="text-cyan-400 text-8xl float-left" />
+		<Spaceship class="text-cyan-400 text-8xl float-left mr-3" />
 	</div>
 	<div>
 		<p class="border-b-2 border-cyan-400 w-fit pb-1">
@@ -22,12 +22,28 @@
 			</div>
 		{/if}
 		{#if ship.crew.required != 0}
-			<div>
-				<p>Crew: {ship.crew.current}/{ship.crew.required}</p>
+			<div class="p-1 mt-1 border-2 border-cyan-400">
+				<h1
+					class="text-center justify-center mx-auto bg-cyan-400 text-black"
+				>
+					Crew
+				</h1>
+				<p>
+					Crew: {ship.crew.required}/{ship.crew.current}/{ship.crew
+						.capacity}
+				</p>
+				<p>Morale: {ship.crew.morale}</p>
+				<p>Wages: {ship.crew.wages}</p>
+				<p>Rotation: {ship.crew.rotation}</p>
 			</div>
 		{/if}
 		{#if ship.cargo.capacity != 0}
 			<div class="p-1 mt-1 border-2 border-cyan-400">
+				<h1
+					class="text-center justify-center mx-auto bg-cyan-400 text-black"
+				>
+					Cargo
+				</h1>
 				<p>Cargo: {ship.cargo.units}/{ship.cargo.capacity}</p>
 				{#each ship.cargo.inventory as cargo}
 					<p>{cargo.symbol} - {cargo.units}</p>

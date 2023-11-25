@@ -1,19 +1,13 @@
 <script>
 	import "../app.css";
-	import { fly } from "svelte/transition";
-	import { invoke } from "@tauri-apps/api/tauri";
-	import { onMount } from "svelte";
 	import { credits } from "$lib/stores.js";
+	import { fly } from "svelte/transition";
+	import { agent, get_agent } from "$lib/helpers/helpers.js";
+	import { onMount } from "svelte";
 
 	import Money from "virtual:icons/ri/money-cny-circle-line";
 	import Person from "virtual:icons/mdi/badge-account-horizontal";
 	import Chevron from "virtual:icons/tabler/arrow-badge-down-filled";
-
-	let agent;
-	async function get_agent() {
-		agent = await invoke("get_user_agent", {});
-		credits.set(agent.credits);
-	}
 
 	onMount(async () => {
 		get_agent().await;
@@ -36,15 +30,18 @@
 			</h1>
 			<div class="flex justify-between mt-2">
 				{#if agent != null}
-					<span class="flex">
-						<Person class="mr-2 ml-auto my-auto text-xl" />
-						{agent.symbol} - <Chevron
-							class="mr-1 ml-auto my-auto text-2xl"
-						/>
-						{agent.startingFaction}
+					<span class="flex flex-col">
+						<div class="flex">
+							<Person class="mr-2 ml-auto my-auto text-xl" />
+							{agent.symbol}
+						</div>
+						<div class="flex text-start">
+							<Chevron class="mr-1 ml-auto my-auto text-2xl" />
+							{agent.startingFaction}
+						</div>
 					</span>
-					<span class="flex"
-						>{$credits}
+					<span class="flex">
+						<span class="m-auto">{$credits}</span>
 						<Money class="ml-2 my-auto mr-auto text-xl" /></span
 					>
 				{/if}
@@ -52,11 +49,6 @@
 		</div>
 	</div>
 	<div class="flex justify-between border-b-2 border-cyan-400">
-		<a
-			href="/"
-			class={data.pathname == "/" ? class_selected : class_unselected}
-			><ul>Agent</ul>
-		</a>
 		<a
 			href="/ships"
 			class={data.pathname == "/ships"
