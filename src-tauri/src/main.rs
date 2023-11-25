@@ -1,9 +1,11 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use chrono::{DateTime, Local, Utc};
 use openapi::apis::agents_api::{get_my_agent, *};
 use openapi::apis::configuration;
 use openapi::apis::configuration::Configuration;
+use openapi::apis::contracts_api::get_contracts;
 use openapi::apis::fleet_api::get_my_ships;
 use openapi::models::*;
 use std::fs;
@@ -41,9 +43,32 @@ async fn get_user_ships() -> Vec<Ship> {
     ships
 }
 
+#[tauri::command]
+async fn get_user_contracts() -> Vec<Contract> {
+    let configuration = get_user_configuration();
+
+    let mut contracts = get_contracts(&configuration, None, None)
+        .await
+        .unwrap()
+        .data;
+
+    for contract in &mut contracts {
+        let utc_time: DateTime<Utc> = contract.terms.deadline.parse().unwrap();
+        let local_time: DateTime<Local> = DateTime::from(utc_time);
+
+        contract.terms.deadline = local_time.format("%I:%M:%S%p %Y-%m-%d").to_string();
+    }
+
+    contracts
+}
+
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_user_agent, get_user_ships])
+        .invoke_handler(tauri::generate_handler![
+            get_user_agent,
+            get_user_contracts,
+            get_user_ships,
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

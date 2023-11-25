@@ -140,20 +140,15 @@ pub async fn get_my_agent(
     let mut local_var_req_builder =
         local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
-    println!("builder: {:?}", local_var_req_builder);
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder =
             local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
-    println!("builder: {:?}", local_var_req_builder);
     if let Some(ref local_var_token) = local_var_configuration.bearer_access_token {
-        println!("{local_var_token}");
         local_var_req_builder = local_var_req_builder.bearer_auth(local_var_token.to_owned());
     };
 
-    println!("builder: {:?}", local_var_req_builder);
     let local_var_req = local_var_req_builder.build()?;
-    println!("builder: {:?}", local_var_req);
     let local_var_resp = local_var_client.execute(local_var_req).await?;
 
     let local_var_status = local_var_resp.status();
