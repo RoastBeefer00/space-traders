@@ -9,14 +9,12 @@
 	});
 </script>
 
-<div>
-	<div class="flex h-full">
-		<div class="m-auto text-xl">
-			<div class="flex flex-col">
-				{#each $ships as ship}
-					<Ship {ship} />
-				{/each}
-			</div>
+<div class="flex h-full p-4">
+	<div class="m-auto text-xl">
+		<div class="flex flex-col">
+			{#each $ships as ship}
+				<Ship {ship} />
+			{/each}
 		</div>
 	</div>
 </div>

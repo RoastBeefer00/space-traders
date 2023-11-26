@@ -20,8 +20,8 @@
 	let class_selected = "bg-cyan-400 text-black " + class_base;
 </script>
 
-<div class="h-screen">
-	<div class="fixed top-0 left-0 z-50 w-full">
+<div class="flex flex-col h-screen">
+	<div class="w-full">
 		<div class="p-2 bg-black border-b-2 border-cyan-400">
 			<div>
 				<h1
@@ -79,7 +79,7 @@
 		<div
 			in:fly={{ duration: 300, delay: 400, y: 700 }}
 			out:fly={{ duration: 300, y: -700 }}
-			class="mt-[200px] overflow-auto"
+			class="flex-grow overflow-auto"
 		>
 			<slot />
 		</div>

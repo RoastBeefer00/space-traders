@@ -4,3 +4,4 @@ export let credits = writable(0);
 export let contracts = writable([]);
 export let ships = writable([]);
 export let agent = writable({});
+export let waypoints = writable([])
